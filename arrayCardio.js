@@ -75,39 +75,60 @@ const users = [
 ];
 
 // 1. Show all users names
-const usersNames = users.map(user => user.name);
-log(usersNames)
+const usersNames = users.map((user) => user.name);
+log(usersNames);
 
 // 2. Show all users friends
-const allFriends = users.flatMap(user => user.friends);
-log(allFriends)
+const allFriends = users.flatMap((user) => user.friends);
+log(allFriends);
 // 3. Show all users friends (cannot be repeated)
-const filteredFriends = allFriends.filter( (user, index, array) => array.indexOf(user) === index) ;
-table(filteredFriends)
+const filteredFriends = allFriends.filter(
+  (user, index, array) => array.indexOf(user) === index
+);
+table(filteredFriends);
 
 // 4. Show all users with less than 3k balance
 
-const poorUsers = users.filter(user => user.balance < 3000);
-table(poorUsers)
+const poorUsers = users.filter((user) => user.balance < 3000);
+table(poorUsers);
 // 5. Show every users with blue eyes
 
 // 7. reduce (Show the richest user)
-const richestUser = users.reduce( (maxBalance, currentUser) => {
+
+const richestUser = users.reduce((maxBalance, currentUser) => {
   if (currentUser.balance > maxBalance) {
     maxBalance = currentUser.balance;
-    log(maxBalance)
+    log(maxBalance);
   }
-  return maxBalance
+  return maxBalance;
 }, 0);
-log(richestUser)
+log(richestUser);
 
+console.clear();
 
+// 8. Show the average age of users
 
-// 8. Write a function that counts the sum of all funds that the users hold:
+const totalAge = users.reduce((acc, user) => {
+  acc += user.age;
+  return acc;
+}, 0);
+log(totalAge);
+const averageAge = Math.round(totalAge / users.length);
 
-// 8. Write a function that returns a user with a given age:
+log(averageAge);
 
-// 9. Write a function that returns a user older than a given age:
+// 8. Write a function that returns a users with a given age:
+
+function userWithGivenAge(users, age) {
+  const filteredUsers = users.filter((user) => {
+    if (user.age === age) {
+      return user;
+    }
+  });
+  return filteredUsers;
+}
+
+log(userWithGivenAge(users, 39));
 
 const people = [
   "Bernhard, Sandra",
@@ -168,44 +189,42 @@ const inventors = [
   { first: "Hanna", last: "Hammarström", year: 1829, passed: 1909 },
 ];
 
-// Show first and last name of all investors
-const investorsNames = inventors.map(i => ` ${i.first} ${i.last}`);
-log(investorsNames)
-
-// Show all inventors born in 1500'
-const filteredInvestors = inventors.filter(i => (i.year > 1500 && i.year < 1600) );
-log(filteredInvestors)
-
-// At what age each inventor died?
-const ageOfInventors = inventors.map(i => i.passed - i.year);
-log(ageOfInventors);
-
-// Show average 
-
-// Add Age to every inventor
-
 // Array.prototype.filter()
 // 1. Filter the list of inventors for those who were born in the 1500's
-
+const bornIn1500 = inventors.filter((i) => i.year > 1500 && i.year < 1600);
+log(bornIn1500);
 // Array.prototype.map()
 // 2. Give us an array of the inventors first and last names
-
+const allNames = inventors.map((i) => `${i.first} ${i.last}`);
+log(allNames);
 // Array.prototype.sort()
 // 3. Sort the inventors by birthdate, oldest to youngest
+const sortedInventors = inventors.sort((a, b) => b.year - a.year);
+
+table(sortedInventors);
 
 // Array.prototype.reduce()
 // 4. How many years did all the inventors live all together?
 
-// 5. Sort the inventors by years lived
+const sumAge = inventors.reduce((acc, i) => {
+  acc += i.passed - i.year;
+  return acc;
+}, 0);
+log(sumAge);
 
-// 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
-// https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
+// 5. Sort the inventors by years lived
+const yearsLived = inventors.sort(
+  (a, b) => a.passed - a.year - (b.passed - b.year)
+);
+table(yearsLived);
 
 // 7. sort Exercise
 // Sort the people alphabetically by last name
 
 // 8. Reduce Exercise
 // Sum up the instances of each of these
+
+
 const data = [
   "car",
   "car",
@@ -224,3 +243,14 @@ const data = [
 ];
 
 
+   const transportation = data.reduce(function (obj, item) {
+     if (!obj[item]) {
+       obj[item] = 0;
+     }
+     obj[item]++;
+     return obj;
+   }, {});
+
+console.log(transportation);
+   
+console.clear()
